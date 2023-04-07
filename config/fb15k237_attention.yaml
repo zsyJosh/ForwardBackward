@@ -1,0 +1,36 @@
+output_dir: ~/scratch/logicnn_output/
+
+dataset:
+  class: FB15k237
+  path: ~/kg-datasets/
+
+task:
+  class: KnowledgeGraphCompletion
+  model:
+    class: AttentionNBFNet
+    input_dim: 16
+    hidden_dims: [16, 16, 16, 16, 16, 16]
+    dropout: 0
+    aggregation: sum
+    short_cut: yes
+    layer_norm: mlp
+    dependent: yes
+    remove_one_hop: yes
+    tied_weights: yes
+    per_step_gate: yes
+  criterion: bce
+  num_negative: 32
+  strict_negative: yes
+  adversarial_temperature: 0.5
+  sample_weight: no
+
+optimizer:
+  class: Adam
+  lr: 5.0e-3
+
+engine:
+  gpus: [0, 1, 2, 3]
+  batch_size: 24
+
+train:
+  num_epoch: 10

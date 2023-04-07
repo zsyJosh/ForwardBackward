@@ -1,0 +1,44 @@
+output_dir: ~/scratch/logicnn_output/
+
+dataset:
+  class: FB15k237
+  path: ~/kg-datasets/
+
+task:
+  class: KnowledgeGraphCompletionEx
+  model:
+    class: LogicNN
+    input_dim: 16
+    hidden_dims: [16, 16, 16, 16]
+    max_triangle:
+      qsq: 0
+    min_coverage: 1
+    min_confidence: 1
+    message_func: distmult
+    aggregate_func: pna
+    short_cut: yes
+    layer_norm: yes
+    remove_one_hop: yes
+    dependent: yes
+    only_init_loop: yes
+    relation_as_fact: yes
+    auxiliary_node: yes
+    self_loop: yes
+    readout_unary: yes
+  criterion: bce
+  num_negative: 32
+  strict_negative: yes
+  adversarial_temperature: 0.5
+  sample_weight: no
+
+optimizer:
+  class: Adam
+  lr: 5.0e-3
+
+engine:
+  gpus: [0, 1, 2, 3]
+  batch_size: 12
+
+train:
+  num_epoch: 10
+  batch_per_epoch: 2000

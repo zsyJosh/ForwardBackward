@@ -1,0 +1,29 @@
+output_dir: ~/scratch/embedding_output/
+
+dataset:
+  class: CoDEx
+  path: ~/kg-datasets/
+  size: m
+
+task:
+  class: KnowledgeGraphCompletion
+  model:
+    class: ComplEx
+    embedding_dim: 512
+    num_entity: 17050
+  criterion: bce
+  num_negative: 1024
+  strict_negative: yes
+  adversarial_temperature: 0.5
+  sample_weight: yes
+
+optimizer:
+  class: Adam
+  lr: 1.0e-3
+
+engine:
+  gpus: [0]
+  batch_size: 1024
+
+train:
+  num_epoch: 50

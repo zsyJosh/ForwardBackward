@@ -1,0 +1,33 @@
+output_dir: ~/scratch/logicnn_output/
+
+dataset:
+  class: CLUTRR
+  path: ~/kg-datasets/
+  length: 4
+
+task:
+  class: InductiveRelationPrediction
+  model:
+    class: NBFNetRelPred
+    input_dim: 64
+    hidden_dims: [64, 64, 64, 64, 64, 64, 64, 64, 64, 64]
+    message_func: distmult
+    aggregate_func: attention
+    short_cut: yes
+    layer_norm: yes
+    tied_weights: yes
+    flip_graph: no
+    dropout: 0.3
+    pre_activation: Transformer
+  num_mlp_layer: 2
+
+optimizer:
+  class: Adam
+  lr: 5.0e-3
+
+engine:
+  gpus: [0]
+  batch_size: 128
+
+train:
+  num_epoch: 20

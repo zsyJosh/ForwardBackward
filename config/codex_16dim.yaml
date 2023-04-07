@@ -1,0 +1,40 @@
+output_dir: ~/scratch/logicnn_output/
+
+dataset:
+  class: CoDEx
+  path: ~/kg-datasets/
+  size: m
+
+task:
+  class: KnowledgeGraphCompletion
+  model:
+    class: NBFNet
+    input_dim: 16
+    hidden_dims: [16, 16, 16, 16, 16, 16]
+    message_func: distmult
+    aggregate_func: sum
+    short_cut: yes
+    layer_norm: yes
+    dependent: yes
+    remove_one_hop: yes
+    tied_weights: 3
+    transformer_combine: yes
+    subgoal: yes
+    gumbel_softmax: yes
+    parallel_subgoal: 4
+  criterion: bce
+  num_negative: 32
+  strict_negative: yes
+  adversarial_temperature: 0.5
+  sample_weight: no
+
+optimizer:
+  class: Adam
+  lr: 5.0e-3
+
+engine:
+  gpus: [0, 1, 2, 3]
+  batch_size: 64
+
+train:
+  num_epoch: 10

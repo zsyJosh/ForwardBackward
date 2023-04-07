@@ -1,0 +1,35 @@
+output_dir: ~/scratch/logicnn_output/
+
+dataset:
+  class: Kinship
+  path: ~/kg-datasets/
+
+task:
+  class: KnowledgeGraphCompletion
+  model:
+    class: LogicNN
+    input_dim: 16
+    hidden_dims: [16, 16, 16, 16, 16, 16]
+    max_triangle:
+      fff: 5
+    message_func: distmult
+    aggregate_func: sum
+    short_cut: yes
+    layer_norm: yes
+    remove_one_hop: yes
+  criterion: bce
+  num_negative: 32
+  strict_negative: yes
+  adversarial_temperature: 0.5
+  sample_weight: no
+
+optimizer:
+  class: Adam
+  lr: 5.0e-3
+
+engine:
+  gpus: [0, 1, 2, 3]
+  batch_size: 6
+
+train:
+  num_epoch: 10
