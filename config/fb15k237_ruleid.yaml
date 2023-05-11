@@ -9,7 +9,7 @@ task:
   model:
     class: BackwardForwardReasoning
     backward_model:
-      class: RuleEmbedding
+      class: RuleRNN
       input_dim: 64
       num_hop: 2
       identity: yes

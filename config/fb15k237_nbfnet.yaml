@@ -12,12 +12,8 @@ task:
       class: RuleNBFNet
       input_dim: 64
       num_hop: 2
-      message_func: distmult
-      aggregate_func: sum
-      short_cut: yes
-      layer_norm: yes
-      dependent: no
-      transformer_combine: yes
+      identity: yes
+      straight_through: yes
     forward_model:
       class: NBFNet
       input_dim: 64
@@ -29,6 +25,7 @@ task:
       dependent: yes
       transformer_combine: yes
     remove_one_hop: yes
+    num_recursion: 2
   criterion: bce
   num_negative: 32
   strict_negative: yes
@@ -44,4 +41,4 @@ engine:
   batch_size: 64
 
 train:
-  num_epoch: 10
+  num_epoch: 20
